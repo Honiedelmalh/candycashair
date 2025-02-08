@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض الأسعار</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>تفاصيل الفاتورة</h2>
+        <table id="receiptTable">
+            <thead>
+                <tr>
+                    <th>المنتج</th>
+                    <th>السعر</th>
+                    <th>الكمية</th>
+                    <th>الإجمالي</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <h3>الإجمالي: <span id="finalTotal">0</span> جنيه</h3>
+    </div>
+
+    <script>
+        const savedInvoice = JSON.parse(localStorage.getItem("savedInvoice")) || [];
+        const receiptTable = document.querySelector("#receiptTable tbody");
+        let finalTotal = 0;
+
+        savedInvoice.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.product}</td>
+                <td>${item.price}</td>
+                <td>${item.quantity}</td>
+                <td>${item.total}</td>
+            `;
+            receiptTable.appendChild(row);
+            finalTotal += parseFloat(item.total);
+        });
+
+        document.getElementById("finalTotal").innerText = finalTotal;
+    </script>
+</body>
+</html>
